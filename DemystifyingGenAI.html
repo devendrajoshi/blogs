@@ -20,7 +20,10 @@
         .container {
             padding: 2rem;
         }
-        h1, h2 {
+        h1 {
+            color: #fff;
+        }
+        h2 {
             color: #333;
         }
         p {
@@ -29,6 +32,9 @@
         ul {
             list-style-type: none;
             padding: 0;
+        }
+        ul ul {
+            margin-left: 20px; /* Adjust the value as needed */
         }
         li {
             margin-bottom: 1rem;
@@ -93,50 +99,302 @@ While LLMs focus on text generation, GenAI can also create other forms of conten
 Typically, the LLM creator or provider offers the API. This API is specifically designed to work with their particular LLM, ensuring compatibility and optimal performance. However, there are also some generic frameworks, like Hugging Face Transformers, that provide tools and libraries for working with various LLMs, including those from different providers.
                     </div>
                 </li>
+                <li>
+                    <div class="question">Do I always have to send my queries/data over the internet to external servers for using LLM?</div>
+                    <div class="answer">
+                        I had the same concern when starting with LLM and GenAI. Most of my work involves confidential data, so I looked at other options available:
+                        <ul>
+                            <li>While hosted ChatGPT and Gemini models require sending data over the internet, there are alternatives.</li>
+                            <li><b>Ollama:</b> Provides a very good alternative for local deployment, ensuring data privacy. Ollama allows you to run LLMs on your own hardware, which means your data never leaves your premises. This is particularly useful for industries with strict data privacy regulations, such as healthcare and finance.</li>
+                            <li>System resources can be a problem when running LLMs locally, as they require significant computational power. High-performance GPUs and ample memory are often necessary to achieve optimal performance.</li>
+                            <li>Using appropriate instance types in the cloud could be a good alternative to balance performance and cost. Cloud providers offer scalable resources, allowing you to choose instances with the right amount of CPU, GPU, and memory to meet your needs without overcommitting resources.</li>
+                        </ul>
+                    </div>
+                </li>
               <li>
                   <div class="question">What are the popular Tools and Frameworks for LLMs?</div>
                     <div class="answer">
                         This answer is subjective to personal choice and is time sensitive. The field is moving so fast that the list below may become outdated very soon. The frameworks and tools can be divided into categories based on their primary use cases:
                         <ol>
-                          <li><b>Model Development and Training:</b></li>
-                            TensorFlow: A flexible platform for building and training LLMs.
-                            PyTorch: A dynamic computational graph framework for deep learning.
-                            Hugging Face Transformers: Provides pre-trained LLMs and tools for fine-tuning.
-                            Ollama: A modular, open-source framework for building and running LLMs, offering flexibility and customization.
-                          <li><b>Model Fine-tuning and Adaptation:</b></li>
-                          <li><b>LLM Integration into Applications:</b></li>
-                          <li><b>LLM Deployment and Management:</b></li>
+                        <li><b>Model Development and Training:</b>
+                            <ul>
+                                <li><b>TensorFlow:</b> A flexible platform for building and training LLMs.</li>
+                                <li><b>PyTorch:</b> A dynamic computational graph framework for deep learning.</li>
+                                <li><b>Hugging Face Transformers:</b> Provides pre-trained LLMs and tools for fine-tuning.</li>
+                                <li><b>Ollama:</b> A modular, open-source framework for building and running LLMs, offering flexibility and customization.</li>
+                            </ul>
+                        </li>
+                        <li><b>Model Fine-tuning and Adaptation:</b>
+                            <ul>
+                                <li><b>Hugging Face Transformers:</b> Offers tools for adapting pre-trained models to specific tasks.</li>
+                                <li><b>EleutherAI's GPT-NeoX:</b> A suite of tools for training and fine-tuning large-scale models.</li>
+                                <li><b>DeepMind's AlphaFold:</b> Techniques for fine-tuning LLMs, originally developed for protein structure prediction.</li>
+                            </ul>
+                        </li>
+                        <li><b>LLM Integration into Applications:</b>
+                            <ul>
+                                <li><b>Hugging Face Transformers:</b> Can be easily integrated into various software projects.</li>
+                                <li><b>LangChain:</b> A framework for simplifying LLM integration into applications.</li>
+                                <li><b>Cohere:</b> A cloud-based platform offering pre-trained LLMs and APIs.</li>
+                                <li><b>OpenAI API:</b> Provides access to OpenAI's powerful language models.</li>
+                            </ul>
+                        </li>
+                        <li><b>LLM Deployment and Management:</b>
+                            <ul>
+                                <li><b>Hugging Face Hub:</b> A platform for sharing and deploying LLMs.</li>
+                                <li><b>Ollama:</b> A modular framework that can be used for deploying and managing LLMs, especially for custom models.</li>
+                                <li><b>AWS SageMaker:</b> A cloud-based platform for building, training, and deploying machine learning models, including LLMs.</li>
+                                <li><b>Google Cloud AI Platform:</b> Similar to AWS SageMaker, providing tools for LLM deployment and management.</li>
+                            </ul>
+                        </li>
                         </ol>
                     </div>
                 </li>
               <li>
-                  <div class="question"></div>
+                <li>
+                    <div class="question">What is Training, Pretraining, Fine-tuning, and Prompt Tuning?</div>
                     <div class="answer">
-                        
+                        <ol>
+                            <li><strong>Training</strong>
+                                <ul>
+                                    <li><strong>Definition:</strong> The process of teaching a neural network to perform a specific task by feeding it large amounts of data and adjusting its parameters.</li>
+                                    <li><strong>Who does it:</strong> Typically large tech companies or research institutions with significant computational resources.</li>
+                                    <li><strong>Resources:</strong> Massive datasets, powerful hardware (GPUs, TPUs), and specialized software frameworks.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Pretraining</strong>
+                                <ul>
+                                    <li><strong>Definition:</strong> A technique where a model is trained on a large, general-purpose dataset before being adapted to a specific task.</li>
+                                    <li><strong>Who does it:</strong> Large tech companies or research institutions.</li>
+                                    <li><strong>Resources:</strong> Enormous datasets, often publicly available corpora, and significant computational power.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Fine-tuning</strong>
+                                <ul>
+                                    <li><strong>Definition:</strong> The process of adapting a pretrained model to a specific task by training it on a smaller, task-specific dataset.</li>
+                                    <li><strong>Who does it:</strong> Domain experts, researchers, or organizations seeking to adapt LLMs to specific tasks.</li>
+                                    <li><strong>Resources:</strong> Task-specific datasets, pre-trained models, and computational resources (though often less intensive than training or pretraining).</li>
+                                </ul>
+                            </li>
+                            <li><strong>Prompt Tuning</strong>
+                                <ul>
+                                    <li><strong>Definition:</strong> A technique that involves modifying the input prompt to a language model to guide its response.</li>
+                                    <li><strong>Who does it:</strong> Users or developers who want to interact with and control LLM outputs.</li>
+                                    <li><strong>Resources:</strong> Access to a pre-trained LLM and knowledge of prompt engineering techniques.</li>
+                                </ul>
+                            </li>
+                        </ol>
                     </div>
                 </li>
-              <li>
-                  <div class="question"></div>
+                
+                <li>
+                    <div class="question">What is Prompt Engineering?</div>
                     <div class="answer">
-                        
+                        Prompt Engineering is a technique used in the field of Generative AI to effectively communicate with a Large Language Model (LLM). It involves crafting the input or ‘prompt’ in a way that guides the model towards generating the desired output.
+                        <ul>
+                            <li><strong>Explicit Instruction:</strong> Clearly stating the format or type of response you want from the model.</li>
+                            <li><strong>Contextual Framing:</strong> Providing additional context or background information to guide the model’s response.</li>
+                            <li><strong>Systematic Exploration:</strong> Iteratively refining the prompt based on the model’s previous outputs.</li>
+                        </ul>
+                        The goal of Prompt Engineering is not just to get a correct response, but also to make the interaction with the model more efficient, reliable, and predictable. It’s an essential skill for developers working with GenAI and LLMs, and it often requires a good understanding of the model’s behavior and some creative problem-solving skills.
                     </div>
                 </li>
-              <li>
-                  <div class="question"></div>
+                
+                <li>
+                    <div class="question">What is Retrieval-Augmented Generation (RAG)?</div>
                     <div class="answer">
-                        
+                        Retrieval-Augmented Generation (RAG) is a method used in Generative AI that combines the best of both retrieval-based and generative models.
+                        <ul>
+                            <li>In a typical generative model, the model generates responses based on a fixed knowledge that was learned during training. However, RAG models enhance this process by retrieving relevant documents or information from a large corpus at runtime, and then generating a response based on both the retrieved information and the original prompt.</li>
+                            <li>From a software developer’s perspective, you can think of RAG as a way to make your AI model more dynamic and adaptable. Instead of being limited to what it learned during training, a RAG model can pull in new information from a database or document collection, allowing it to provide more accurate and up-to-date responses.</li>
+                            <li>RAG models are particularly useful in scenarios where the information landscape is constantly changing, such as news updates, customer support, or any other domain where real-time information is crucial.</li>
+                        </ul>
+                        Remember, while RAG models can be powerful, they also come with their own set of challenges, such as the need for a large and high-quality document collection, and increased computational requirements due to the retrieval step. As a developer, it’s important to consider these factors when deciding whether to use a RAG model.
                     </div>
                 </li>
-              <li>
-                  <div class="question"></div>
+                
+                <li>
+                    <div class="question">What are Embeddings?</div>
                     <div class="answer">
-                        
+                        <p>Embeddings are a type of word representation that allows words with similar meaning to have a similar representation. They are a distributed representation for text that is perhaps one of the key breakthroughs for the impressive performance of deep learning methods on challenging natural language processing problems.</p>
+                        <p>Embeddings are used to capture semantic and syntactic meanings of words in a high-dimensional space. This is achieved by representing words as dense vectors (as opposed to sparse vectors in techniques like Bag of Words). The position of a word within the vector space is learned from text and is based on the words that surround the word when it is used. Word embeddings can be trained using the input corpus itself or can be generated using pre-trained word embeddings such as Glove, FastText, and Word2Vec.</p>
+                    </div>
+                    <div class="question">How are Embeddings used in RAG?</div>
+                    <div class="answer">
+                        <p>In the context of Retrieval-Augmented Generation (RAG), embeddings play a crucial role in the retrieval step. When a prompt is given to the RAG model, it converts the prompt into an embedding and then uses this embedding to retrieve relevant documents from a database or a large corpus of text. The retrieved documents are also represented as embeddings. The model then compares the prompt embedding with the document embeddings to find the most relevant documents. These documents are then used to augment the generation process, allowing the model to generate responses that are not only based on its training data but also on the specific information contained in the retrieved documents.</p>
+                        <p>This makes RAG models particularly useful in scenarios where real-time, up-to-date information is crucial. However, it’s important to note that the quality of the embeddings can significantly impact the performance of a RAG model. As a developer, understanding how to generate and work with high-quality embeddings is a key skill when working with RAG models.</p>
                     </div>
                 </li>
-              <li>
-                  <div class="question"></div>
+                
+                <li>
+                    <div class="question">What are different LLM Architectures?</div>
                     <div class="answer">
-                        
+                        Large Language Models (LLMs) have primarily evolved around two main architectural frameworks: Recurrent Neural Networks (RNNs) and Transformers. These architectures have been instrumental in shaping the capabilities and advancements of LLMs.
+                        <ol>
+                            <li><strong>Recurrent Neural Networks (RNNs)</strong>
+                                <ul>
+                                    <li>RNNs were among the early architectures used for LLMs. They are designed to process sequential data, making them suitable for natural language tasks. RNNs employ a hidden state that stores information about past inputs, allowing them to capture long-range dependencies in text.</li>
+                                    <li><strong>Long Short-Term Memory (LSTM):</strong> A variant of RNNs, LSTMs are specifically designed to address the vanishing gradient problem, which can hinder the training of deep RNNs. LSTMs introduce "gates" (input, forget, and output) to regulate the flow of information, enabling them to learn long-term dependencies more effectively.</li>
+                                    <li><strong>Gated Recurrent Units (GRUs):</strong> A simpler variant of LSTMs, GRUs also address the vanishing gradient problem but use fewer gates, making them computationally efficient.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Transformers</strong>
+                                <ul>
+                                    <li>Transformers have emerged as the dominant architecture for LLMs due to their ability to capture long-range dependencies and parallelize computations. They are based on the attention mechanism, which allows the model to weigh the importance of different parts of the input sequence when processing a specific part.</li>
+                                    <li><strong>Encoder-Decoder Architecture:</strong> This is the most common architecture for LLMs, consisting of an encoder that processes the input sequence and a decoder that generates the output sequence. The attention mechanism is used to connect the encoder and decoder, allowing the decoder to attend to relevant parts of the input sequence.</li>
+                                    <li><strong>Autoregressive Models:</strong> These models are designed to generate text sequence by sequence. They use the attention mechanism to attend to previous tokens in the sequence, allowing them to generate coherent and contextually relevant text.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Other Architectures</strong>
+                                <ul>
+                                    <li>Hybrid Models: Combining elements of RNNs and Transformers to leverage their respective strengths.</li>
+                                    <li>Hierarchical Models: Using hierarchical structures to capture different levels of information in text.</li>
+                                    <li>Sparse Attention Models: Reducing the computational complexity of attention by limiting the connections between different parts of the sequence. </li>
+                                </ul>
+                                The choice of architecture depends on factors such as the specific task, computational resources, and desired performance. Transformers have gained significant popularity due to their efficiency and ability to capture long-range dependencies, making them the preferred choice for many modern LLMs.
+                            </li>
+                        </ol>
+              <li>
+                    <div class="question">How do I learn more about GenAI?</div>
+                    <div class="answer">
+                        To have a good fundamental knowledge of GenAI and its application, I have provided a structured roadmap to understanding GenAI and its applications. It outlines key topics and pairs them with valuable resources for deeper exploration. Please note that this guide serves as a navigational tool, pointing out the structure of the subject matter and providing resource pointers, but it does not delve into the content of each topic. Let’s embark on this exciting journey of discovery in the world of GenAI!
+                        <ol>
+                            <li><strong>Generative AI</strong>
+                                <ul>
+                                    <li><strong>Introduction to Generative Models</strong>
+                                        <ul>
+                                            <li>Overview of generative models and their applications.</li>
+                                            <li>Resources: IBM’s Introduction to Generative AI, Google Cloud Skills Boost</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Variational Autoencoders (VAEs)</strong>
+                                        <ul>
+                                            <li>Understanding VAEs and their use in generating new data.</li>
+                                            <li>Python Packages: TensorFlow, Keras.</li>
+                                            <li>Resources: DeepBean’s VAE Tutorial, Tutorial on Variational Autoencoders</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Generative Adversarial Networks (GANs)</strong>
+                                        <ul>
+                                            <li>Basics of GANs and their architecture.</li>
+                                            <li>Python Packages: PyTorch, TensorFlow, Keras.</li>
+                                            <li>Resources: Simplilearn’s GAN Tutorial, DataCamp’s GAN Tutorial</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Natural Language Processing (NLP)</strong>
+                                <ul>
+                                    <li><strong>Text Preprocessing</strong>
+                                        <ul>
+                                            <li>Techniques for cleaning and preparing text data.</li>
+                                            <li>Python Packages: NLTK, SpaCy.</li>
+                                            <li>Resources: FreeCodeCamp’s NLP Tutorial, Analytics Vidhya’s Text Preprocessing</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Sentiment Analysis</strong>
+                                        <ul>
+                                            <li>Methods for analyzing sentiment in text.</li>
+                                            <li>Python Packages: TextBlob, VADER.</li>
+                                            <li>Resources: AIMultiple’s Sentiment Analysis Methods, Built In’s Sentiment Analysis Overview</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Language Models (e.g., GPT, BERT)</strong>
+                                        <ul>
+                                            <li>Understanding and using advanced language models.</li>
+                                            <li>Python Packages: Transformers (Hugging Face), GPT-3 API.</li>
+                                            <li>Resources: Google Cloud Tech’s Transformers Explained, Hugging Face’s BERT 101</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Data Visualization</strong>
+                                <ul>
+                                    <li><strong>Matplotlib and Seaborn</strong>
+                                        <ul>
+                                            <li>Creating static visualizations.</li>
+                                            <li>Python Packages: Matplotlib, Seaborn.</li>
+                                            <li>Resources: DataCamp’s Seaborn Tutorial, GeeksforGeeks’ Seaborn Tutorial</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Interactive Visualization with Plotly</strong>
+                                        <ul>
+                                            <li>Building interactive plots and dashboards.</li>
+                                            <li>Python Packages: Plotly, Dash.</li>
+                                            <li>Resources: Epython Lab’s Plotly Tutorial, Programming Historian’s Plotly Guide</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Cloud Computing for Data Science</strong>
+                                <ul>
+                                    <li><strong>Using AWS, Google Cloud, or Azure for Data Science</strong>
+                                        <ul>
+                                            <li>Setting up cloud environments for data science projects.</li>
+                                            <li>Python Packages: Boto3 (AWS), Google Cloud Client Libraries, Azure SDK.</li>
+                                            <li>Resources: AWS for Data Science Basics, Google Cloud Blog’s Intro to Data Science</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Cloud-based Machine Learning Services</strong>
+                                        <ul>
+                                            <li>Utilizing cloud services for machine learning.</li>
+                                            <li>Python Packages: AWS SageMaker, Google AI Platform, Azure Machine Learning.</li>
+                                            <li>Resources: DeepLearningAI’s Practical Data Science on AWS, DataCamp’s Google Cloud Tutorial</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Ethics in AI and Data Science</strong>
+                                <ul>
+                                    <li><strong>Ethical Considerations in AI</strong>
+                                        <ul>
+                                            <li>Understanding the ethical implications of AI.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Bias and Fairness in AI Models</strong>
+                                        <ul>
+                                            <li>Techniques to identify and mitigate bias.</li>
+                                            <li>Python Packages: AIF360, Fairlearn.</li>
+                                            <li>Resources: IBM’s Ethics in AI, Fairlearn Documentation</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Project Management and Collaboration</strong>
+                                <ul>
+                                    <li><strong>Version Control with Git</strong>
+                                        <ul>
+                                            <li>Using Git for version control and collaboration.</li>
+                                            <li>Tools: Git, GitHub, GitLab.</li>
+                                            <li>Resources: GitHub’s Git Tutorial, Atlassian’s Git Tutorial</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Collaborative Tools</strong>
+                                        <ul>
+                                            <li>Using tools for collaborative data science work.</li>
+                                            <li>Python Packages: Jupyter Notebooks, Google Colab.</li>
+                                            <li>Resources: Jupyter Documentation, Google Colab Tutorial</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Real-world Applications and Case Studies</strong>
+                                <ul>
+                                    <li><strong>Case Studies of Data Science Projects</strong>
+                                        <ul>
+                                            <li>Analyzing successful data science projects.</li>
+                                            <li>Resources: Kaggle Case Studies, Data Science Central Case Studies</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Applications of Generative AI in Various Industries</strong>
+                                        <ul>
+                                            <li>Exploring how generative AI is used in healthcare, finance, entertainment, etc.</li>
+                                            <li>Resources: MIT News on Generative AI, IBM’s Generative AI Applications</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
                     </div>
                 </li>
             </ul>
