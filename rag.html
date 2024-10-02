@@ -67,28 +67,54 @@ HOST_DOCS_PATH=/path/to/your/localdocs/
 LOCAL_DOCS_PATH=/docs/
 </code></pre>
 
-<h2>Creating the API Structure</h2>
-
-<p>Our FastAPI application will have a basic structure with a RequestModel for defining the query parameters:</p>
-
+<h2>Defining the FastAPI Application</h2>
+<p>We start by defining our FastAPI application:</p>
+<pre><code class="language-python">
+app = FastAPI(
+    title = "RAG Tutorial",
+    version ="1.0",
+    description ="A simple API Server"
+)
+</code></pre>
+  
+<p>This creates a new FastAPI application with the specified title, version, and description. FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.</p>
+<h2>Adding Middleware</h2>
+<p>Next, we add a middleware to our application:</p>
+app.add_middleware(GZipMiddleware, minimum_size=1000, compresslevel=1)
+<p>This line adds the GZipMiddleware to our FastAPI application. Middleware is a way to add extra functionality to the request/response processing flow. In this case, the GZipMiddleware will compress HTTP responses for all routes.</p>
+<h2>Defining the Request Model</h2>
+<p>We define a Pydantic model to validate the data we receive in our endpoint:</p>
 <pre><code class="language-python">
 class RequestModel(BaseModel):
     #prompt is mandatory
     prompt: str
-    # prompt_template is optional
-    prompt_template: Optional[str] = Field(None)
     session_context: Optional[str] = Field(None)
 </code></pre>
-
-<p>We'll also have a create_index function for interacting with the vector database. This function reads all the PDF files in the local_docs folder, uses HuggingFaceEmbeddings to create embeddings, and stores them in the Chroma vector database.</p>
-
-<p>Finally, we'll have a /query API that implements RAG. This API interacts with the LLM using Ollama APIs. Here's what the code for this API might look like:</p>
-
+  
+<p>This model expects a mandatory ‘prompt’ field and an optional ‘session_context’ field in the incoming request.</p>
+<h2>Creating the Index Endpoint</h2>
+<p>We define an endpoint for creating the index:</p>
+<pre><code class="language-python">
+@app.post("/create_index/")
+async def create_index_endpoint(background_tasks: BackgroundTasks):
+    global is_index_creation_running
+    if is_index_creation_running:
+        return {"message":"Index creation is already running"}
+    else:
+        is_index_creation_running = True
+        background_tasks.add_task(create_index_background)
+        return {"message":"Index creation started in background"}  
+</code></pre>
+<p>This endpoint starts the index creation in the background. If the index creation is already running, it returns a message indicating that. Otherwise, it starts the index creation and returns a message indicating that the index creation has started.</p>
+<h2>Creating the Query Endpoint</h2>
+<p>Finally, we define the main query endpoint:</p>
 <pre><code class="language-python">
 @app.post("/query/")
 async def generate_response(request: RequestModel):
-    # Code goes here
+    ...
 </code></pre>
+<p>This endpoint takes a RequestModel as input and generates a response. If the vector database is not None, it uses the retriever to get documents related to the prompt. If there are no documents, it generates a response without using the retriever. Otherwise, it uses the retriever and the langchain model to generate a response.</p>
+<h2>References</h2>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
