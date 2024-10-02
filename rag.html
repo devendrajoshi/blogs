@@ -1,0 +1,87 @@
+Sure, here's the HTML version of your blog post:
+
+```html
+<h1>Building a RAG-Powered API with FastAPI and OllamaLLM</h1>
+
+<h2>Introduction</h2>
+
+<p>Imagine a doctor who has to diagnose a patient based on their symptoms. In one scenario, the doctor knows nothing about the patient's medical history, family history, or any other relevant information. The doctor can still make a diagnosis, but it might not be as accurate or helpful as it could be.</p>
+
+<p>Now, imagine a second scenario where the doctor has access to a comprehensive patient information system. This system contains all the patient's past medical records, family history, and other relevant data. The doctor can now make a much more informed diagnosis.</p>
+
+<p>In the world of AI, the doctor is akin to a Large Language Model (LLM), and the patient information system is like a document retrieval system. The combination of these two is what we call Retrieval Augmented Generation (RAG). RAG leverages the power of LLMs and document retrieval to provide more accurate and context-specific responses, making it ideal for tasks like question answering and summarization.</p>
+
+<h2>Setting Up the Environment</h2>
+
+<p>We will be using Docker to set up our environment. Here's what our docker-compose.yml file will look like:</p>
+
+<pre>
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-container
+    volumes:
+      - ${HOST_OLLAMA_HOME}:/root/.ollama
+    restart: always
+
+  fastapi:
+    build: .
+    container_name: fastapi-container
+    restart: always
+    depends_on:
+      - ollama
+    ports:
+      - "9001:9001"
+    volumes:
+      - ${HOST_INDEX_PATH}:${INDEX_PATH}
+      - ${HOST_DOCS_PATH}:${LOCAL_DOCS_PATH}
+</pre>
+
+<p>This setup includes two main services: ollama and fastapi. The ollama service is responsible for interacting with the LLM, while the fastapi service handles the REST API. We're also using Chroma as our vector database within the fastapi container.</p>
+
+<p>We have a few volume mounts for persisting and reusing data. These paths are defined in a .env file. Here's an example:</p>
+
+<pre>
+INDEX_PATH=/app/index/
+HOST_INDEX_PATH=./index/
+
+LLM_MODEL=llama3.2:1b
+LLM_HOST=ollama
+LLM_PORT=11434
+HOST_OLLAMA_HOME=/Users/devejosh/.ollama/
+
+EMBEDDING_MODEL_NAME=sentence-transformers/all-mpnet-base-v2
+SPLITTER_CHUNK_SIZE=1000
+SPLITTER_CHUNK_OVERLAP=200
+
+HOST_DOCS_PATH=/Users/devejosh/projects/rag/localdocs/
+LOCAL_DOCS_PATH=/docs/
+</pre>
+
+<h2>Creating the API Structure</h2>
+
+<p>Our FastAPI application will have a basic structure with a RequestModel for defining the query parameters:</p>
+
+<pre>
+class RequestModel(BaseModel):
+    #prompt is mandatory
+    prompt: str
+    # prompt_template is optional
+    prompt_template: Optional[str] = Field(None)
+    session_context: Optional[str] = Field(None)
+</pre>
+
+<p>We'll also have a create_index function for interacting with the vector database. This function reads all the PDF files in the local_docs folder, uses HuggingFaceEmbeddings to create embeddings, and stores them in the Chroma vector database.</p>
+
+<p>Finally, we'll have a /query API that implements RAG. This API interacts with the LLM using Ollama APIs. Here's what the code for this API might look like:</p>
+
+<pre>
+@app.post("/query/")
+async def generate_response(request: RequestModel):
+    # Code goes here
+</pre>
+```
+
+I hope this helps! Let me know if you need further assistance.
