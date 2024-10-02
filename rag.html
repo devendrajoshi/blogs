@@ -4,6 +4,7 @@
 
 <h1>Building a RAG-Powered API with FastAPI and OllamaLLM</h1>
 
+<body>
 <h2>Introduction</h2>
 
 <p>Imagine a doctor who has to diagnose a patient based on their symptoms. In one scenario, the doctor knows nothing about the patient's medical history, family history, or any other relevant information. The doctor can still make a diagnosis, but it might not be as accurate or helpful as it could be.</p>
@@ -44,7 +45,7 @@ services:
 
 <p>We have a few volume mounts for persisting and reusing data. These paths are defined in a .env file. Here's an example:</p>
 
-<pre>
+<pre><code class="language-bash">
 #Path inside container
 INDEX_PATH=/app/index/
 
@@ -64,7 +65,7 @@ SPLITTER_CHUNK_OVERLAP=200
 HOST_DOCS_PATH=/path/to/your/localdocs/
 #Path inside container
 LOCAL_DOCS_PATH=/docs/
-</pre>
+</code></pre>
 
 <h2>Creating the API Structure</h2>
 
@@ -88,3 +89,9 @@ class RequestModel(BaseModel):
 async def generate_response(request: RequestModel):
     # Code goes here
 </code></pre>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+</body>
