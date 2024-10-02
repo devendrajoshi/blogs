@@ -6,7 +6,7 @@
 
 <p>Now, imagine a second scenario where the doctor has access to a comprehensive patient information system. This system contains all the patient's past medical records, family history, and other relevant data. The doctor can now make a much more informed diagnosis.</p>
 
-<p>In the world of AI, the doctor is akin to a Large Language Model (LLM), and the patient information system is like a document retrieval system. The combination of these two is what we call Retrieval Augmented Generation (RAG). RAG leverages the power of LLMs and document retrieval to provide more accurate and context-specific responses, making it ideal for tasks like question answering and summarization.</p>
+<p>In the world of AI, the doctor is akin to a <b>Large Language Model (LLM)</b>, and the patient information system is like a document retrieval system. The combination of these two is what we call <b>Retrieval Augmented Generation (RAG)</b>. RAG leverages the power of LLMs and document retrieval to provide more accurate and context-specific responses, making it ideal for tasks like question answering and summarization.</p>
 
 <h2>Setting Up the Environment</h2>
 
@@ -36,7 +36,7 @@ services:
       - ${HOST_DOCS_PATH}:${LOCAL_DOCS_PATH}
 </pre>
 
-<p>This setup includes two main services: ollama and fastapi. The ollama service is responsible for interacting with the LLM, while the fastapi service handles the REST API. We're also using Chroma as our vector database within the fastapi container.</p>
+<p>This setup includes two main services: <b>ollama</b> and <b>fastapi</b>. The <b>ollama</b> service is responsible for interacting with the LLM, while the <b>fastapi</b> service handles the REST API. We're also using Chroma as our vector database within the fastapi container.</p>
 
 <p>We have a few volume mounts for persisting and reusing data. These paths are defined in a .env file. Here's an example:</p>
 
@@ -79,6 +79,3 @@ class RequestModel(BaseModel):
 async def generate_response(request: RequestModel):
     # Code goes here
 </pre>
-```
-
-I hope this helps! Let me know if you need further assistance.
