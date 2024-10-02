@@ -1,6 +1,4 @@
 
-
-```markdown
 # Building a RAG-Powered API with FastAPI and OllamaLLM
 
 In the ever-evolving field of artificial intelligence, **Retrieval Augmented Generation (RAG)** is a standout concept that uniquely combines information retrieval and language generation. This blog post will explore the details of RAG and its practical implementation using FastAPI and OllamaLLM.
