@@ -31,7 +31,9 @@
 
 <h2>Setting Up the Environment</h2>
 
-<p>We will be using Docker to set up our environment. Here's what our docker-compose.yml file will look like:</p>
+<h2>Setting Up the Environment</h2>
+
+<p>In this project, we are using Docker to set up our environment. Docker allows us to package our application with all of its dependencies into a standardized unit for software development. Below is the configuration of our docker-compose.yml file:</p>
 
 <pre><code class="language-yaml">
 version: '3.8'
@@ -57,7 +59,50 @@ services:
       - ${HOST_DOCS_PATH}:${LOCAL_DOCS_PATH}
 </code></pre>
 
-<p>This setup includes two main services: <b>ollama</b> and <b>fastapi</b>. The <b>ollama</b> service is responsible for interacting with the LLM, while the <b>fastapi</b> service handles the REST API. We're also using Chroma as our vector database within the fastapi container.</p>
+<p>This setup includes two main services: <b>ollama</b> and <b>fastapi</b>. The <b>ollama</b> service is responsible for interacting with the LLM. We are using the official image of ollama, which ensures that we have the most stable and up-to-date version of the service. This eliminates the need for us to rebuild the image every time there is an update.</p>
+
+<p>The <b>fastapi</b> service handles the REST API. We are building this image ourselves, as specified in the Dockerfile. This allows us to customize the service according to our needs. The Dockerfile includes instructions to install the necessary dependencies, copy our application into the container, and set up the environment for our application.</p>
+
+<p>Here is the Dockerfile that we use to build the fastapi service:</p>
+
+<pre><code class="language-dockerfile">
+FROM python:3.12
+
+RUN apt-get update && apt-get install -y ca-certificates 
+
+EXPOSE 9001
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
+
+# Install pip requirements
+COPY requirements.txt .
+RUN python -m pip install --trusted-host files.pythonhosted.org --trusted-host pypi.org --trusted-host pypi.python.org -r requirements.txt
+
+# install gunicorn
+RUN pip install --trusted-host files.pythonhosted.org --trusted-host pypi.org --trusted-host pypi.python.org gunicorn
+
+WORKDIR /app
+COPY ./app /app
+
+# Create folders localdocs and index in app
+RUN mkdir /app/localdocs
+RUN mkdir /app/index
+
+# Add /app to PYTHONPATH
+ENV PYTHONPATH=/app:$PYTHONPATH
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+CMD ["gunicorn", "--bind", "0.0.0.0:9001", "-k", "uvicorn.workers.UvicornWorker", "main:app"]
+</code></pre>
+
+<p>We're also using Chroma as our vector database within the fastapi container. This setup ensures that our application is modular, scalable, and easy to maintain.</p>
 
 <p>We have a few volume mounts for persisting and reusing data. These paths are defined in a .env file. Here's an example:</p>
 
