@@ -5,47 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Building a RAG-Powered API with FastAPI and OllamaLLM: A Hands-On Tutorial</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            margin: 10px 0;
+            padding: 0 20px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
 </head>
 <body>
-    <h1>Building a RAG-Powered API with FastAPI and OllamaLLM: A Hands-On Tutorial</h1>
-    <p>In this blog post, we'll walk you through the process of building a RAG-powered API using FastAPI and OllamaLLM. We'll start by explaining what RAG is and how it works. Then, we'll dive into the code, demonstrating how to set up the API, create an embeddings index, and use RAG to generate responses.</p>
-    
-    <h2>What is RAG?</h2>
-    <p>Imagine you're a doctor trying to diagnose a patient. Without access to Patient Information Systems (PIS), you might rely solely on your intuition and experience. However, with the aid of a PIS, you can access the patient's medical history, family history, and current symptoms, leading to a more accurate diagnosis.</p>
-    <p>In this analogy, the doctor represents a Large Language Model (LLM), and the PIS represents a document vector store. RAG (Retrieval Augmented Generation) is the process of combining these two elements to produce more accurate and informative responses. It's like the doctor using the PIS to provide a more tailored and relevant diagnosis.</p>
-    
-    <h2>What is RAG? A Deeper Dive</h2>
-    <p>RAG is a technique that involves retrieving relevant information from a large corpus of text and then using that information to generate a more informative response. This approach is particularly useful for tasks that require a deep understanding of a specific domain, such as answering questions about complex topics or generating creative content.</p>
-    <p>There are several variants of RAG, including:</p>
-    <ul>
-        <li><b>HyDE (Hypothetical Document Embedding):</b> This method generates mock documents to improve the performance of document retrieval in a Haystack pipeline. It is especially useful for data from a special domain. HyDE first generates a hypothetical document based on the query, then encodes it into an embedding vector and uses it to identify similar actual documents in the corpus.</li>
-        <li><b>Graph RAG:</b> This approach uses graph databases to represent relationships between documents and entities, allowing for more complex queries.</li>
-    </ul>
-    
-    <h2>Building a RAG-Powered API with FastAPI and OllamaLLM</h2>
-    <p>For this project, we'll be using FastAPI to create a REST API that will expose our RAG-powered functionality. We'll also use OllamaLLM to interact with our local LLM models.</p>
-    <p>OllamaLLM is a powerful and flexible LLM platform that allows you to easily deploy and manage LLM models. It provides a simple API for interacting with the models, making it easy to integrate LLMs into your applications.</p>
-    <p>FastAPI is a high-performance Python web framework that is ideal for building APIs. It is easy to learn and use, and it provides a number of features that make it a great choice for building REST APIs.</p>
-    <p>Our architecture will utilize Docker containers to make it easier to manage and deploy our application. Docker containers provide a portable and isolated environment for running applications, making it easier to develop, test, and deploy our RAG-powered API.</p>
-    
-    <h2>System Requirements:</h2>
-    <p>For optimal performance, it's recommended to have a system with at least 16GB of RAM. OllamaLLM itself may have additional resource requirements depending on the specific LLM model you choose to use. Please refer to the OllamaLLM documentation for detailed information on resource requirements for your chosen LLM model.</p>
-    
-    <h2>Running the Code:</h2>
-    <p>The complete code for this project is available on GitHub at <a href="https://github.com/devendrajoshi/rag.git">https://github.com/devendrajoshi/rag.git</a>.</p>
-    <p>To follow along with the code, you'll need to clone the repository and run the Docker containers. Here's how:</p>
-    <ol>
-        <li><b>Clone the Repository:</b></li>
-        <pre><code class="language-bash">git clone https://github.com/devendrajoshi/rag.git</code></pre>
-        <li><b>Navigate to the project directory:</b></li>
-        <pre><code class="language-bash">cd rag</code></pre>
-        <li><b>Start the Docker containers:</b></li>
-        <pre><code class="language-bash">docker-compose up -d</code></pre>
-    </ol>
-    <p>This command will clone the repository and start the FastAPI and OllamaLLM containers in the background using Docker Compose.</p>
-    <p><b>Note:</b> Make sure you have Docker installed and configured on your system before running these commands.</p>
-    <p>For a more detailed breakdown of the code implementation, including creating the embeddings index, retrieving relevant documents, and generating responses using the LLM, please refer to the README in the GitHub repository.</p>
-    
+    <header>
+        <h1>Building a RAG-Powered API with FastAPI and OllamaLLM: A Hands-On Tutorial</h1>
+    </header>
+    <div class="container">
+        <p>In this blog post, I'll walk you through the process of building a RAG-powered API using FastAPI and OllamaLLM. We'll start by explaining what RAG is and how it works. Then, we'll dive into the code, demonstrating how to set up the API, create an embeddings index, and use RAG to generate responses.</p>
+        
+        <h2>What is RAG?</h2>
+        <p>Imagine you're a doctor trying to diagnose a patient. Without access to Patient Information Systems (PIS), you might rely solely on your intuition and experience. However, with the aid of a PIS, you can access the patient's medical history, family history, and current symptoms, leading to a more accurate diagnosis.</p>
+        <p>In this analogy, the doctor represents a Large Language Model (LLM), and the PIS represents a document vector store. RAG (Retrieval Augmented Generation) is the process of combining these two elements to produce more accurate and informative responses. It's like the doctor using the PIS to provide a more tailored and relevant diagnosis.</p>
+        
+        <h2>What is RAG? A Deeper Dive</h2>
+        <p>RAG is a technique that involves retrieving relevant information from a large corpus of text and then using that information to generate a more informative response. This approach is particularly useful for tasks that require a deep understanding of a specific domain, such as answering questions about complex topics or generating creative content.</p>
+        <p>There are several variants of RAG, including:</p>
+        <ul>
+            <li><b>HyDE (Hypothetical Document Embedding):</b> This method generates mock documents to improve the performance of document retrieval in a Haystack pipeline. It is especially useful for data from a special domain. HyDE first generates a hypothetical document based on the query, then encodes it into an embedding vector and uses it to identify similar actual documents in the corpus.</li>
+            <li><b>Graph RAG:</b> This approach uses graph databases to represent relationships between documents and entities, allowing for more complex queries.</li>
+        </ul>
+        
+        <h2>Building a RAG-Powered API with FastAPI and OllamaLLM</h2>
+        <p>For this project, we'll be using FastAPI to create a REST API that will expose our RAG-powered functionality. We'll also use OllamaLLM to interact with our local LLM models.</p>
+        <p>OllamaLLM is a powerful and flexible LLM platform that allows you to easily deploy and manage LLM models. It provides a simple API for interacting with the models, making it easy to integrate LLMs into your applications.</p>
+        <p>FastAPI is a high-performance Python web framework that is ideal for building APIs. It is easy to learn and use, and it provides a number of features that make it a great choice for building REST APIs.</p>
+        <p>Our architecture will utilize Docker containers to make it easier to manage and deploy our application. Docker containers provide a portable and isolated environment for running applications, making it easier to develop, test, and deploy our RAG-powered API.</p>
+        
+        <h2>System Requirements:</h2>
+        <p>For optimal performance, it's recommended to have a system with at least 16GB of RAM. OllamaLLM itself may have additional resource requirements depending on the specific LLM model you choose to use. Please refer to the OllamaLLM documentation for detailed information on resource requirements for your chosen LLM model.</p>
+        
+        <h2>Running the Code:</h2>
+        <p>The complete code for this project is available on GitHub at <a href="https://github.com/devendrajoshi/rag.git">https://github.com/devendrajoshi/rag.git</a>.</p>
+        <p>To follow along with the code, you'll need to clone the repository and run the Docker containers. Here's how:</p>
+        <ol>
+            <li><b>Clone the Repository:</b></li>
+            <pre><code class="language-bash">git clone https://github.com/devendrajoshi/rag.git</code></pre>
+            <li><b>Navigate to the project directory:</b></li>
+            <pre><code class="language-bash">cd rag</code></pre>
+            <li><b>Start the Docker containers:</b></li>
+            <pre><code class="language-bash">docker-compose up -d</code></pre>
+        </ol>
+        <p>This command will clone the repository and start the FastAPI and OllamaLLM containers in the background using Docker Compose.</p>
+        <p><b>Note:</b> Make sure you have Docker installed and configured on your system before running these commands.</p>
+        <p>For a more detailed breakdown of the code implementation, including creating the embeddings index, retrieving relevant documents, and generating responses using the LLM, please refer to the README in the GitHub repository.</p>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 </body>
 </html>
