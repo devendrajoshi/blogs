@@ -13,16 +13,26 @@ header {
     text-align: center;
     position: relative;
 }
+
+header h1 {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+}
+
+header h1 sub {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 1.5em; /* Adjust this value to position the sub text below the header text */
+    white-space: nowrap; /* Prevent wrapping */
+}
+
 header h1 sub a {
     font-size: 0.6em;
     vertical-align: sub;
     color: #fff;
     text-decoration: none;
-    position: absolute;
-    top: 100%;
-    right:0;
-    margin-left: auto;
-    white-space: nowrap;
 }
 
 header h1 sub a:hover {
