@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const headerHTML = `
-        <header>
-            <h1>Your Blog Title<sub><a href="https://www.linkedin.com/in/yourprofile" target="_blank">Your Name</a></sub></h1>
-        </header>
-    `;
-    document.body.insertAdjacentHTML('afterbegin', headerHTML);
+    const header = document.querySelector('header h1');
+    if (header) {
+        const subHTML = `<sub><a href="https://www.linkedin.com/in/joshidevendra" target="_blank">Devendra Joshi</a></sub>`;
+        header.insertAdjacentHTML('beforeend', subHTML);
+    }
 });
