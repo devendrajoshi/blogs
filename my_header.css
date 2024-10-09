@@ -19,7 +19,7 @@ header h1 sub a {
     text-decoration: none;
     position: relative;
     top: 20px;
-    left: -50px;
+    margin-left: auto;
 }
 
 header h1 sub a:hover {
