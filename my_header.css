@@ -20,6 +20,7 @@ header h1 sub a {
     position: relative;
     top: 20px;
     margin-left: auto;
+    white-space: nowrap;
 }
 
 header h1 sub a:hover {
